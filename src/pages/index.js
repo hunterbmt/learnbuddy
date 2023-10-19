@@ -137,6 +137,8 @@ const IndexPage = () => (
                   <p>{knowledge.Summary}</p>
                   <h5>Why this gap is important ?</h5>
                   <p>{knowledge.Thought}</p>
+                  <h5>Self-reflect question ?</h5>
+                  <ul>{knowledge["Key questions"].map(q => <li>{q}</li>)}</ul>
                   <Collapsible open trigger="Personalize learning course" triggerTagName="h5" triggerStyle={{cursor: "pointer"}}>
                     <h2>{knowledge.Course.Name}</h2>
                     <p>{knowledge.Course.Description}</p>
