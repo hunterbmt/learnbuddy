@@ -130,9 +130,9 @@ const IndexPage = () => (
           <h4>Why this competence is important?</h4>
           <p>{competence.Thought}</p>
           <h4>Knowledge Gap (Compare with current level - Intermediate)</h4>
-          {competence["Knowledge Gap"].map(knowledge => (
+          {competence["Knowledge Gap"].map((knowledge, p) => (
             <div style={{padding: "0.5rem"}}>
-              <Collapsible open trigger={knowledge.Title} triggerTagName="h4" triggerStyle={{cursor: "pointer"}}>
+              <Collapsible open trigger={`Gap No ${p +1} - ${knowledge.Title}`} triggerTagName="h4" triggerStyle={{cursor: "pointer"}}>
                 <div style={{display: "flex", flexDirection:"column", padding: "0.5rem"}}>
                   <p>{knowledge.Summary}</p>
                   <h5>Why this gap is important ?</h5>
