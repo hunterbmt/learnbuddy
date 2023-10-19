@@ -125,7 +125,7 @@ const IndexPage = () => (
             marginBottom: "1rem",
             padding: "1rem",
           }}>
-          <h3 className={styles.textCenter}>{competence.Name} - {competence.Level}</h3>
+          <h3 className={styles.textCenter}>{`${competence.Name} (Expected level: ${competence.Level})`}</h3>
           <p>{competence.Description}</p>
           <h4>Why this competence is important?</h4>
           <p>{competence.Thought}</p>
