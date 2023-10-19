@@ -21,7 +21,7 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 64px;
-  --size-content: 54rem;
+  --size-content: 64rem;
   --size-gutter: var(--space-5);
   --size-gap: var(--space-6);
 }
@@ -175,9 +175,6 @@ p *:last-child {
 }
 li > p {
   margin-bottom: calc(var(--space-4) / 2);
-}
-p {
-  max-width: 680px;
 }
 code {
   font-size: 0.875rem;

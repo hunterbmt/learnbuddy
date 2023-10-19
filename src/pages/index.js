@@ -5,6 +5,10 @@ import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import * as styles from "../components/index.module.css"
+import Output from "./output.json";
+import Collapsible from 'react-collapsible';
+import { JSONTree } from 'react-json-tree';
+
 
 const links = [
   {
@@ -67,8 +71,6 @@ const moreLinks = [
   { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
 ]
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
-
 const IndexPage = () => (
   <Layout>
     <div className={styles.textCenter}>
@@ -82,39 +84,92 @@ const IndexPage = () => (
         style={{ marginBottom: `var(--space-3)` }}
       />
       <h1>
-        Welcome to <b>Gatsby!</b>
+        Welcome to <b>Learn Buddy!</b>
       </h1>
-      <p className={styles.intro}>
-        <b>Example pages:</b>{" "}
-        {samplePageLinks.map((link, i) => (
-          <React.Fragment key={link.url}>
-            <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> · </>}
-          </React.Fragment>
-        ))}
-        <br />
-        Edit <code>src/pages/index.js</code> to update this page.
-      </p>
     </div>
-    <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
-        </li>
-      ))}
-    </ul>
-    {moreLinks.map((link, i) => (
-      <React.Fragment key={link.url}>
-        <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> · </>}
-      </React.Fragment>
-    ))}
+    <div style={{display: "flex", flexDirection: "column"}}>
+      <div className={styles.textCenter}><h3>Base information</h3></div>
+      <Collapsible open trigger="Job description" triggerTagName="h4" triggerStyle={{cursor: "pointer"}}>
+        <p>
+        - Own and deliver on the product roadmap, working closely with leadership to understand the product strategy and product vision <br/>
+        - Work in close collaboration with the customer success team, marketing, and engineering to prioritize and develop the right product, and maximize value for customers <br/>
+        - Directly work with customers to gather requirements and feedback and make adjustments to product roadmap based on customer inputs <br/>
+        - Hire, coach, and grow the Vietnam product management team, creating an environment that helps them succeed, and improving the effectiveness of the product management function in the company <br/>
+        - Contribute to the company strategy. Ensure that the plan is realistic and share it with the product people on your team <br/>
+        - Represent the product management function on the leadership team, and build strong connections with the engineering, customer success, marketing, and sales teams <br/>
+        </p>
+      </Collapsible>
+      <Collapsible open trigger="Job requirement" triggerTagName="h4" triggerStyle={{cursor: "pointer"}}>
+        <p>
+        - 10+ years of experience in technology and technology platforms <br/>
+        - 5+ years of work experience as Senior Product Manager, Lead Product Manager, or Head of Product with at least 3 years working in a team management role <br/>
+        - Proven track record partnering with other Business and Engineering stakeholders to communicate complex problems into clear and actionable strategies <br/>
+        - Proven track record participating in developing and delivering high quality, especially SaaS products <br/>
+        - The ability to lead independently in a fast paced environment <br/>
+        - Excellent communication with engineering, sales, delivery, and marketing teams to ensure success <br/>
+        - Solid understanding of the process of building software products from end-to-end <br/>
+        - Experience with client-facing, on multiple projects at the same time <br/>
+        - Strategic thinking represents prioritizing and quick thinking to move the product roadmap forward, remove roadblocks, and ensure an efficient workflow <br/>
+        - Solid experience in working with agile / scrum methodologies <br/>
+        - Experience in working design team and a passion for user experience <br/>
+        - Fluent in written and verbal communication skills in English <br/>
+        </p>
+      </Collapsible>
+      <div className={styles.textCenter}><h3>Competence Mapping</h3></div>
+      <div style={{display: "flex", flexDirection: "column"}}>
+        {Output.map(competence => (
+         <div key={competence.Name} style={{
+            display: "flex",
+            flexDirection: "column",
+            border: "1px solid black",
+            marginBottom: "1rem",
+            padding: "1rem",
+          }}>
+          <h3 className={styles.textCenter}>{competence.Name} - {competence.Level}</h3>
+          <p>{competence.Description}</p>
+          <h4>Why this competence is important?</h4>
+          <p>{competence.Thought}</p>
+          <h4>Knowledge Gap (Compare with current level - Intermediate)</h4>
+          {competence["Knowledge Gap"].map(knowledge => (
+            <div style={{padding: "0.5rem"}}>
+              <Collapsible open trigger={knowledge.Title} triggerTagName="h4" triggerStyle={{cursor: "pointer"}}>
+                <div style={{display: "flex", flexDirection:"column", padding: "0.5rem"}}>
+                  <p>{knowledge.Summary}</p>
+                  <h5>Why this gap is important ?</h5>
+                  <p>{knowledge.Thought}</p>
+                  <Collapsible open trigger="Personalize learning course" triggerTagName="h5" triggerStyle={{cursor: "pointer"}}>
+                    <h2>{knowledge.Course.Name}</h2>
+                    <p>{knowledge.Course.Description}</p>
+                    <h3>Learning objectives</h3>
+                    <ul>
+                      {knowledge.Course["Learning objectives"].map(obj => <li>{obj}</li>)}
+                    </ul>
+                    <h3>Modules</h3>
+                    <div>
+                      {knowledge.Course.Modules.map((obj, index) => <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          border: "1px solid black",
+                          marginBottom: "1rem",
+                          padding: "1rem",
+                        }}>
+                          <h5>Module {index +1} - {obj.Title}</h5>
+                          <p>{obj.Description}</p>
+                          <p><b>Core topics</b></p>
+                          <ul>
+                            {obj["Sub topics"].map(topic => <li>{topic}</li>)}
+                          </ul>
+                        </div>)}
+                    </div>
+                  </Collapsible>
+                </div>
+              </Collapsible>
+            </div>            
+          ))}
+         </div> 
+        ))}
+      </div>
+    </div>  
   </Layout>
 )
 
