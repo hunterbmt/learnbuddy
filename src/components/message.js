@@ -31,14 +31,16 @@ const ChatMessage = ({ msg }) => {
   const sentences = text.split('. ');
 
   return (
-    <div style={{ display: 'flex', width: '100%' }}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', width: '100%', ...(window.innerWidth <= 767 && {flexDirection: 'column'}) }}>
+      <div style={{ display: 'flex', flexDirection: 'column', ...(window.innerWidth <= 767 && {flexDirection: 'row'})  }}>
         <div
           style={{
             width: 90,
             height: 90,
             borderRadius: '50%',
             overflow: 'hidden',
+            ...(window.innerWidth <= 767 && {width: 50,
+              height: 50, marginRight: 10})
           }}
         >
           <img
